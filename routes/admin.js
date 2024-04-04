@@ -5,6 +5,10 @@ const express = require("express");
 
 const rootDir=require('../helper(util)/path')
 
+const productsController=require("../controllers/product")
+const productsController1=require("../controllers/contactUs");
+const productsController2 = require("../controllers/success");
+
 
 const router = express.Router();
 
@@ -15,28 +19,14 @@ const router = express.Router();
 //   );
 // });
 
-router.get("/add-product", (req, res, next) => {
-  res.sendFile(path.join(rootDir, "views", "add-product.html"));
-});
+router.get("/add-product", productsController.getAddProduct);
 
-router.post("/add-product", (req, res, next) => {
-  console.log("in the product middleware");
-  console.log(req.body);
-  res.redirect("/shop");
-});
+router.post("/add-product", productsController.postAddProduct);
 
-router.get("/contactus",(req,res,next)=>{
-  res.sendFile(path.join(rootDir,'views','contactus.html'));
-});
+router.get("/contactus", productsController1.getContactUs);
 
-router.post('/contactus',(req,res,next)=>{
-  console.log(req.body);
-  res.redirect("/admin/success");
-})
+router.post('/contactus', productsController1.postContactUs);
 
-router.get("/success", (req, res, next) => {
-  console.log("inside /success ");
-  res.send("<h1 style=\"color:darkgreen;\">Form successfuly filled!</h1>");
-});
+router.get("/success", productsController2.getSuccess);
 
 module.exports = router;

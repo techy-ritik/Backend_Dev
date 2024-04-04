@@ -1,8 +1,8 @@
 const path=require('path');
 const express=require('express');
 
-const rootDir = require("../helper(util)/path");
-
+// const rootDir = require("../helper(util)/path");
+const productsController=require("../controllers/product")
 
 const router=express.Router();
 
@@ -12,9 +12,7 @@ const router=express.Router();
 //   res.send("<h1>welcome to expresss js</h1>");
 // });
 
-router.get('/',(req,res,next)=>{
-    res.sendFile(path.join(rootDir,'views','shop.html'));
-})
+router.get('/', productsController.getShowProducts)
 
 
 module.exports=router;
