@@ -6,8 +6,8 @@ const express = require("express");
 const rootDir=require('../helper(util)/path')
 
 const productsController=require("../controllers/product")
-const productsController1=require("../controllers/contactUs");
-const productsController2 = require("../controllers/success");
+const contactUsController=require("../controllers/contactUs");
+const successController = require("../controllers/success");
 
 
 const router = express.Router();
@@ -23,10 +23,10 @@ router.get("/add-product", productsController.getAddProduct);
 
 router.post("/add-product", productsController.postAddProduct);
 
-router.get("/contactus", productsController1.getContactUs);
+router.get("/contactus", contactUsController.getContactUs);
 
-router.post('/contactus', productsController1.postContactUs);
+router.post('/contactus', contactUsController.postContactUs);
 
-router.get("/success", productsController2.getSuccess);
+router.get("/success", successController.getSuccess);
 
 module.exports = router;
