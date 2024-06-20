@@ -1,3 +1,4 @@
+const { where } = require("sequelize");
 const Product = require("../models/product");
 
 exports.getAddProduct = (req, res, next) => {
@@ -22,12 +23,19 @@ exports.postAddProduct = (req, res, next) => {
   //   .catch((err) => {
   //     console.log(err);
   //   });
-  Product.create({
+  req.user.createProduct({
     title: title,
     price: price,
     imageUrl: imageUrl,
     description: description,
   })
+  // Product.create({
+  //   title: title,
+  //   price: price,
+  //   imageUrl: imageUrl,
+  //   description: description,
+  //   // dummyUserId: req.user.id,
+  // })
     .then((result) => {
       console.log(res);
       res.redirect("/admin/products");
@@ -55,8 +63,11 @@ exports.getEditProduct = (req, res, next) => {
   //   });
   // });
 
-  Product.findByPk(prodId)
-    .then((product) => {
+
+  req.user.getProducts({where : {id : prodId}})
+  // Product.findByPk(prodId)
+    .then((products) => {
+    const product = products[0];
       if (!product) {
         return res.redirect("/");
       }
@@ -152,7 +163,8 @@ exports.getProducts = (req, res, next) => {
   //     console.log(err);
   //   });
 
-  Product.findAll()
+  // Product.findAll()
+  req.user.getProducts()
     .then((products) => {
       res.render("admin/products", {
         prods: products,
